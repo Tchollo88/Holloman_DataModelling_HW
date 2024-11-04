@@ -15,5 +15,10 @@ namespace Holloman_DataModelling_HW.Data
         }
 
         public DbSet<Holloman_DataModelling_HW.Models.Customer> Customer { get; set; } = default!;
+        public DbSet<Holloman_DataModelling_HW.Models.Address> Address { get; set; } = default!;
+        public DbSet<Holloman_DataModelling_HW.Models.PhoneNumber> PhoneNumber { get; set; } = default!;
+        public DbSet<Holloman_DataModelling_HW.Models.Like> Like { get; set; } = default!;
+        
+
     }
 }
