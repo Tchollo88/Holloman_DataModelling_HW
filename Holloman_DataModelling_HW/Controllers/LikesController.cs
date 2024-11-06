@@ -23,16 +23,16 @@ namespace Holloman_DataModelling_HW.Controllers
 
         // GET: api/Likes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Like>>> GetLike()
+        public async Task<ActionResult<IEnumerable<Like>>> GetLikes()
         {
-            return await _context.Like.ToListAsync();
+            return await _context.Likes.ToListAsync();
         }
 
         // GET: api/Likes/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Like>> GetLike(int id)
         {
-            var like = await _context.Like.FindAsync(id);
+            var like = await _context.Likes.FindAsync(id);
 
             if (like == null)
             {
@@ -78,7 +78,7 @@ namespace Holloman_DataModelling_HW.Controllers
         [HttpPost]
         public async Task<ActionResult<Like>> PostLike(Like like)
         {
-            _context.Like.Add(like);
+            _context.Likes.Add(like);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetLike", new { id = like.LikeId }, like);
@@ -88,13 +88,13 @@ namespace Holloman_DataModelling_HW.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteLike(int id)
         {
-            var like = await _context.Like.FindAsync(id);
+            var like = await _context.Likes.FindAsync(id);
             if (like == null)
             {
                 return NotFound();
             }
 
-            _context.Like.Remove(like);
+            _context.Likes.Remove(like);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -102,7 +102,7 @@ namespace Holloman_DataModelling_HW.Controllers
 
         private bool LikeExists(int id)
         {
-            return _context.Like.Any(e => e.LikeId == id);
+            return _context.Likes.Any(e => e.LikeId == id);
         }
     }
 }

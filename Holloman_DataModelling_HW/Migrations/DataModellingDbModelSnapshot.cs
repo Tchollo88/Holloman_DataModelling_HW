@@ -50,14 +50,13 @@ namespace Holloman_DataModelling_HW.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("StreetAdress2")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("AddressId");
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Address", (string)null);
+                    b.ToTable("Addresses");
                 });
 
             modelBuilder.Entity("Holloman_DataModelling_HW.Models.Customer", b =>
@@ -72,7 +71,6 @@ namespace Holloman_DataModelling_HW.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
@@ -89,7 +87,30 @@ namespace Holloman_DataModelling_HW.Migrations
 
                     b.HasKey("CustomerId");
 
-                    b.ToTable("Customer", (string)null);
+                    b.ToTable("Customers");
+                });
+
+            modelBuilder.Entity("Holloman_DataModelling_HW.Models.CustomerLikes", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LikeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("LikeId");
+
+                    b.ToTable("CustomerLikes");
                 });
 
             modelBuilder.Entity("Holloman_DataModelling_HW.Models.Like", b =>
@@ -100,21 +121,16 @@ namespace Holloman_DataModelling_HW.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("LikeId"));
 
-                    b.Property<int?>("CustomerId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Value")
+                    b.Property<bool>("Type")
                         .HasColumnType("bit");
 
                     b.HasKey("LikeId");
 
-                    b.HasIndex("CustomerId");
-
-                    b.ToTable("Like", (string)null);
+                    b.ToTable("Likes");
                 });
 
             modelBuilder.Entity("Holloman_DataModelling_HW.Models.PhoneNumber", b =>
@@ -140,7 +156,7 @@ namespace Holloman_DataModelling_HW.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("PhoneNumber", (string)null);
+                    b.ToTable("PhoneNumbers");
                 });
 
             modelBuilder.Entity("Holloman_DataModelling_HW.Models.Address", b =>
@@ -154,11 +170,21 @@ namespace Holloman_DataModelling_HW.Migrations
                     b.Navigation("Customer");
                 });
 
-            modelBuilder.Entity("Holloman_DataModelling_HW.Models.Like", b =>
+            modelBuilder.Entity("Holloman_DataModelling_HW.Models.CustomerLikes", b =>
                 {
                     b.HasOne("Holloman_DataModelling_HW.Models.Customer", null)
-                        .WithMany("Likes")
-                        .HasForeignKey("CustomerId");
+                        .WithMany("CustomerLikes")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Holloman_DataModelling_HW.Models.Like", "Like")
+                        .WithMany()
+                        .HasForeignKey("LikeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Like");
                 });
 
             modelBuilder.Entity("Holloman_DataModelling_HW.Models.PhoneNumber", b =>
@@ -176,7 +202,7 @@ namespace Holloman_DataModelling_HW.Migrations
                 {
                     b.Navigation("Addresses");
 
-                    b.Navigation("Likes");
+                    b.Navigation("CustomerLikes");
 
                     b.Navigation("PhoneNumbers");
                 });

@@ -7,14 +7,14 @@
         public string MiddleName { get; set; }
         public string LastName { get; set; }
         public DateTime Birthday { get; set; }
-        public string Email { get; set; }
+        public string? Email { get; set; }
 
         /*Joins*/
         /*Phone Number M -> O*/
-        public ICollection<PhoneNumber> PhoneNumbers { get; set; }
+        public ICollection<PhoneNumber>? PhoneNumbers { get; set; }
         /*Address M -> M*/
-        public ICollection<Address> Addresses { get; set; }
+        public ICollection<Address>? Addresses { get; set; }
         /*Likes M -> M*/
-        public ICollection<Like> Likes { get; set; }
+        public ICollection<CustomerLikes>? CustomerLikes { get; set; }
     }
 }

@@ -12,47 +12,47 @@ namespace Holloman_DataModelling_HW.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PhoneNumbersController : ControllerBase
+    public class CustomerLikesController : ControllerBase
     {
         private readonly DataModellingDb _context;
 
-        public PhoneNumbersController(DataModellingDb context)
+        public CustomerLikesController(DataModellingDb context)
         {
             _context = context;
         }
 
-        // GET: api/PhoneNumbers
+        // GET: api/CustomerLikes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PhoneNumber>>> GetPhoneNumbers()
+        public async Task<ActionResult<IEnumerable<CustomerLikes>>> GetCustomerLikes()
         {
-            return await _context.PhoneNumbers.ToListAsync();
+            return await _context.CustomerLikes.ToListAsync();
         }
 
-        // GET: api/PhoneNumbers/5
+        // GET: api/CustomerLikes/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<PhoneNumber>> GetPhoneNumber(int id)
+        public async Task<ActionResult<CustomerLikes>> GetCustomerLikes(int id)
         {
-            var phoneNumber = await _context.PhoneNumbers.FindAsync(id);
+            var customerLikes = await _context.CustomerLikes.FindAsync(id);
 
-            if (phoneNumber == null)
+            if (customerLikes == null)
             {
                 return NotFound();
             }
 
-            return phoneNumber;
+            return customerLikes;
         }
 
-        // PUT: api/PhoneNumbers/5
+        // PUT: api/CustomerLikes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPhoneNumber(int id, PhoneNumber phoneNumber)
+        public async Task<IActionResult> PutCustomerLikes(int id, CustomerLikes customerLikes)
         {
-            if (id != phoneNumber.PhoneNumberId)
+            if (id != customerLikes.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(phoneNumber).State = EntityState.Modified;
+            _context.Entry(customerLikes).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace Holloman_DataModelling_HW.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PhoneNumberExists(id))
+                if (!CustomerLikesExists(id))
                 {
                     return NotFound();
                 }
@@ -73,36 +73,36 @@ namespace Holloman_DataModelling_HW.Controllers
             return NoContent();
         }
 
-        // POST: api/PhoneNumbers
+        // POST: api/CustomerLikes
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<PhoneNumber>> PostPhoneNumber(PhoneNumber phoneNumber)
+        public async Task<ActionResult<CustomerLikes>> PostCustomerLikes(CustomerLikes customerLikes)
         {
-            _context.PhoneNumbers.Add(phoneNumber);
+            _context.CustomerLikes.Add(customerLikes);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPhoneNumber", new { id = phoneNumber.PhoneNumberId }, phoneNumber);
+            return CreatedAtAction("GetCustomerLikes", new { id = customerLikes.Id }, customerLikes);
         }
 
-        // DELETE: api/PhoneNumbers/5
+        // DELETE: api/CustomerLikes/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePhoneNumber(int id)
+        public async Task<IActionResult> DeleteCustomerLikes(int id)
         {
-            var phoneNumber = await _context.PhoneNumbers.FindAsync(id);
-            if (phoneNumber == null)
+            var customerLikes = await _context.CustomerLikes.FindAsync(id);
+            if (customerLikes == null)
             {
                 return NotFound();
             }
 
-            _context.PhoneNumbers.Remove(phoneNumber);
+            _context.CustomerLikes.Remove(customerLikes);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool PhoneNumberExists(int id)
+        private bool CustomerLikesExists(int id)
         {
-            return _context.PhoneNumbers.Any(e => e.PhoneNumberId == id);
+            return _context.CustomerLikes.Any(e => e.Id == id);
         }
     }
 }
